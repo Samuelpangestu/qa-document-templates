@@ -1,0 +1,52 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Thumbnails
+Thumbs.db
+
+# Temporary files
+*~
+*.swp
+*.swo
+*.tmp
+*.bak
+*.log
+
+# IDE / Editor
+.vscode/
+.idea/
+*.sublime-*
+
+# Project specific - User filled templates
+*_filled.md
+*_draft.md
+*_v[0-9]*.md
+!*_template_v*.md
+
+# Evidence folders (jika ada)
+evidence/
+screenshots/
+test-results/
+
+# Personal notes
+NOTES.md
+TODO.md
+.personal/
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Keep template structure
+!01_TEST_PLAN.md
+!02_SIT_REPORT.md
+!03_UAT_REPORT.md
+!04_PERFORMANCE_TEST_REPORT.md
+!05_TEST_EXECUTION_SUMMARY.md
+!06_TEST_CLOSURE_REPORT.md
+!README.md
+!CHANGES_SUMMARY.md

@@ -101,6 +101,14 @@ Project: [Nama Proyek]
 - Environment: Staging/Pre-Production
 - Deliverable: UAT Report dengan sign-off
 
+**Mapping Test Levels → Output Documents:**
+
+| Test Level | Output Document | Template |
+|------------|-----------------|----------|
+| Unit Testing | Code coverage report | Automated (SonarQube/Jest) |
+| Integration + System Testing | SIT Report | 02_SIT_REPORT.md |
+| User Acceptance Testing | UAT Report | 03_UAT_REPORT.md |
+
 ### 2.2 Jenis Testing
 
 **Functional Testing**
@@ -123,6 +131,17 @@ Project: [Nama Proyek]
 **Regression Testing**
 - Full test suite execution
 - Environment: Staging
+
+**Mapping Jenis Testing → Output Documents:**
+
+| Jenis Testing | Output Document | Template |
+|---------------|-----------------|----------|
+| Functional Testing | SIT Report (functional results section) | 02_SIT_REPORT.md |
+| Performance Testing | Performance Test Report | 04_PERFORMANCE_TEST_REPORT.md |
+| Security Testing (VAPT) | Security Test Report | 07_SECURITY_TEST_REPORT.md |
+| Regression Testing | Regression Test Report | 08_REGRESSION_TEST_REPORT.md |
+
+**Note:** Setiap jenis testing memiliki output document tersendiri untuk memastikan semua aspek quality tercatat dengan baik.
 
 ### 2.3 Automation (Opsional - Tergantung Kebutuhan)
 

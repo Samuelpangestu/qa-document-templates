@@ -20,15 +20,12 @@
 - Struktur header konsisten di SEMUA template (INFORMASI DOKUMEN, HISTORY PERUBAHAN, dll)
 - Format tabel seragam di semua dokumen
 - Format checkbox standar: `[ ]` (tanpa emoticon)
-- Pattern approval sections konsisten:
-  - Planning docs: PERSETUJUAN
-  - Report docs: DIBUAT OLEH + DIREVIEW OLEH
-  - UAT special: DIBUAT OLEH + PERSETUJUAN UAT
+- Pattern approval sections konsisten
 
-**3. Zero Redundansi**
-- Setiap template memiliki tujuan yang UNIK dan tidak tumpang tindih
-- Tidak ada duplikasi konten antar template
-- Clear separation of concerns
+**3. Complete Testing Coverage**
+- Setiap testing type di Test Plan memiliki output document tersendiri
+- Clear mapping: Test Plan → Testing Activities → Output Reports
+- Zero redundancy - no overlap antar dokumen
 
 **4. Integrasi QATM Lengkap**
 - Integrasi seamless dengan QATM spreadsheet
@@ -46,216 +43,143 @@
 - Marked sebagai opsional dengan note jelas
 - Pertimbangkan: kompleksitas project, budget, timeline, ROI
 
-**7. Template Baru: Test Closure Report**
-- Final comprehensive report setelah SEMUA testing phases
-- Production readiness assessment
-- Lessons learned & handover
+---
+
+## STRUKTUR TEMPLATES (8 TEMPLATES)
+
+### Testing Lifecycle Mapping
+
+```
+1. PLANNING PHASE
+   └─> Test Plan (01)
+
+2. EXECUTION PHASE - Test Levels
+   ├─> Unit Testing → Code coverage (automated)
+   ├─> Integration + System Testing → SIT Report (02)
+   └─> User Acceptance Testing → UAT Report (03)
+
+3. EXECUTION PHASE - Test Types
+   ├─> Functional Testing → SIT Report (02)
+   ├─> Performance Testing → Performance Test Report (04)
+   ├─> Security Testing → Security Test Report (07)
+   └─> Regression Testing → Regression Test Report (08)
+
+4. SUPPORTING PHASE
+   ├─> Pre-UAT Check → Test Execution Summary (05)
+   └─> Final Wrap-Up → Test Closure Report (06)
+
+5. PRODUCTION RELEASE
+```
+
+### Template Mapping Table
+
+| Testing Activity | Output Document | Template # | Type |
+|-----------------|-----------------|------------|------|
+| Planning & Strategy | Test Plan | 01 | Planning |
+| Integration + System Test | SIT Report | 02 | Test Results |
+| User Acceptance Test | UAT Report | 03 | Stakeholder Approval |
+| Performance Test | Performance Report | 04 | Test Results |
+| Pre-UAT Status | Test Execution Summary | 05 | Status Summary |
+| Final Wrap-Up | Test Closure Report | 06 | Final Summary |
+| Security Test (VAPT) | Security Test Report | 07 | Test Results |
+| Regression Test | Regression Report | 08 | Test Results |
 
 ---
 
-## TEMPLATE YANG TERSEDIA (6 TEMPLATES)
+## TEMPLATE DESCRIPTIONS
 
-### 1. TEST PLAN (01_TEST_PLAN.md)
+### 01. Test Plan
 **Tujuan:** Comprehensive testing strategy & planning
-**Kapan Digunakan:** Di awal project, sebelum test execution
-**Waktu Pengisian:** 2-3 jam
+**Kapan:** Di awal project, sebelum test execution
 **Type:** Planning Document
-
-**Section Utama:**
-- Informasi Dokumen
-- Pendahuluan & Struktur Proyek
-- Strategi Testing (Levels, Types, SLA)
-- Scope Testing
-- Test Environment & Jadwal
-- Integrasi QATM
-- Entry & Exit Criteria
-- Manajemen Defect
-- Manajemen Risiko
-- Automation (Opsional)
-
-**Unique Value:** Satu-satunya planning document, berisi strategy sebelum execution.
+**Unique Value:** Satu-satunya planning document, berisi strategy + mapping ke output documents
 
 ---
 
-### 2. SIT REPORT (02_SIT_REPORT.md)
-**Tujuan:** System Integration Test results reporting
-**Kapan Digunakan:** Setelah integration testing selesai (internal QA)
-**Waktu Pengisian:** 1-2 jam
-**Type:** Testing Results Report
-
-**Section Utama:**
-- Ringkasan Eksekutif
-- Objektif SIT
-- Scope Testing
-- Ringkasan Eksekusi Test
-- Analisis Bug
-- QATM Metrics
-- Kesimpulan & Rekomendasi
-
-**Decision Framework:**
-- PASS: Pass rate >= 95%, Open Blocker = 0
-- CONDITIONAL: Pass rate 90-94% dengan workaround
-- NOT PASS: Pass rate < 90% atau critical issues
-
-**Unique Value:** Formal integration testing report, fokus technical integration antar komponen.
+### 02. SIT Report
+**Tujuan:** System Integration Test results (Integration + System + Functional)
+**Kapan:** Setelah internal QA testing selesai
+**Type:** Test Results Report
+**Unique Value:** Menggabungkan Integration Testing dan System Testing dalam satu report
+**Decision:** PASS / CONDITIONAL / NOT PASS
 
 ---
 
-### 3. UAT REPORT (03_UAT_REPORT.md)
+### 03. UAT Report
 **Tujuan:** User Acceptance Test results & stakeholder approval
-**Kapan Digunakan:** Setelah UAT dengan stakeholders selesai
-**Waktu Pengisian:** 2-3 jam
+**Kapan:** Setelah UAT dengan stakeholders selesai
 **Type:** Stakeholder Approval Document
-
-**Section Utama:**
-- Pendahuluan
-- Scope UAT
-- Detail Pelaksanaan
-- Risiko UAT
-- Entry & Exit Criteria
-- Hasil Testing (user scenarios)
-- Ringkasan Bug
-- Feedback & Issues
-- Kesimpulan & Keputusan
-- Persetujuan Formal (stakeholder signatures)
-
-**Decision Framework:**
-- APPROVED: Feature ready untuk production
-- CONDITIONAL: Approved dengan minor fixes
-- REJECTED: Feature tidak memenuhi requirement
-
-**Unique Value:** Satu-satunya dokumen dengan formal stakeholder approval untuk business acceptance.
+**Unique Value:** Satu-satunya dokumen dengan formal stakeholder approval
+**Decision:** APPROVED / CONDITIONAL / REJECTED
 
 ---
 
-### 4. PERFORMANCE TEST REPORT (04_PERFORMANCE_TEST_REPORT.md)
-**Tujuan:** Performance testing results & analysis
-**Kapan Digunakan:** Setelah load/stress/endurance test selesai
-**Waktu Pengisian:** 2-4 jam
-**Type:** Technical Performance Report
-
-**Section Utama:**
-- Ringkasan Eksekutif
-- Konfigurasi Test
-- Scope Testing
-- Test Metrics & SLA (tiered by API category)
-- Hasil Testing
-- Analisis Performance
-- Identifikasi Bottleneck
-- Kesimpulan & Rekomendasi
-
-**SLA Categories:**
-- Critical APIs: P95 <= 1.500ms, Error < 0.1%
-- High-Priority: P95 <= 2.500ms, Error < 1%
-- Standard CRUD: P95 <= 3.600ms, Error < 5%
-- Batch/Report: P95 <= 10.000ms, Error < 10%
-
-**Decision Framework:**
-- PASS: Semua APIs meet SLA
-- WARNING: Some APIs di luar SLA tapi acceptable
-- FAIL: Critical APIs tidak meet SLA
-
-**Unique Value:** Fokus eksklusif pada performance metrics, SLA compliance, bottleneck analysis.
+### 04. Performance Test Report
+**Tujuan:** Performance testing results & SLA compliance
+**Kapan:** Setelah load/stress/endurance test selesai
+**Type:** Test Results Report
+**Unique Value:** Fokus eksklusif pada performance metrics dan bottleneck analysis
+**Decision:** PASS / WARNING / FAIL
 
 ---
 
-### 5. TEST EXECUTION SUMMARY (05_TEST_EXECUTION_SUMMARY.md)
+### 05. Test Execution Summary
 **Tujuan:** Pre-UAT summary & readiness check
-**Kapan Digunakan:** Sebelum UAT, saat stakeholder request status update
-**Waktu Pengisian:** 30-60 menit
+**Kapan:** Sebelum UAT, saat stakeholder request status update
 **Type:** Quick Status Summary
-
-**Section Utama:**
-- Ringkasan Eksekutif
-- Status Eksekusi Test
-- Ringkasan Bug (with severity breakdown)
-- Status Environment
-- Outstanding Items
-- Risiko & Mitigasi
-- QATM Metrics
-- Rekomendasi
-- Next Steps
-
-**Decision Framework:**
-- READY: Execution >= 95%, Pass rate >= 95%, Open Blocker = 0
-- NOT READY: Critical blockers exist, provide revised timeline
-
-**Unique Value:** Quick snapshot untuk stakeholder decision: proceed ke UAT atau tidak? Bukan full report.
+**Unique Value:** Quick snapshot untuk stakeholder decision: proceed ke UAT atau tidak?
+**Decision:** READY / NOT READY
 
 ---
 
-### 6. TEST CLOSURE REPORT (06_TEST_CLOSURE_REPORT.md) - NEW!
+### 06. Test Closure Report
 **Tujuan:** Final comprehensive wrap-up setelah SEMUA testing phases
-**Kapan Digunakan:** Setelah SIT, UAT, Performance, Security tests selesai, sebelum production release
-**Waktu Pengisian:** 2-4 jam
+**Kapan:** Setelah SIT, UAT, Performance, Security tests selesai
 **Type:** Final Project Summary & Handover
-
-**Section Utama:**
-- Ringkasan Eksekutif
-- Ringkasan Semua Testing Phases (SIT, UAT, Performance, Security, Regression)
-- Test Coverage Final
-- Ringkasan Bug Final
-- Quality Metrics
-- Production Readiness Assessment
-- Lessons Learned
-- Rekomendasi
-- Handover ke Support Team
-- Sign-Off
-
-**Decision Framework:**
-- GO FOR PRODUCTION: Semua criteria met, ready to deploy
-- NO-GO: Blockers exist, defer production
-
-**Unique Value:** Satu-satunya dokumen yang meng-consolidate SEMUA testing phases, production readiness decision, dan lessons learned untuk continuous improvement.
+**Unique Value:** Consolidate semua testing phases + production readiness + lessons learned
+**Decision:** GO / NO-GO for Production
 
 ---
 
-## KAPAN MENGGUNAKAN TEMPLATE MANA?
+### 07. Security Test Report
+**Tujuan:** Security testing results (VAPT - Vulnerability Assessment & Penetration Testing)
+**Kapan:** Setelah security testing selesai (setiap 3 bulan atau major release)
+**Type:** Test Results Report
+**Unique Value:** OWASP Top 10 coverage, vulnerability analysis, risk assessment
+**Decision:** PASS / FAIL
 
-### Testing Lifecycle Flow
+---
 
-```
-1. Project Start
-   └─> TEST PLAN (01)
+### 08. Regression Test Report
+**Tujuan:** Regression testing results untuk verify changes tidak break existing functionality
+**Kapan:** Setelah bug fixes, feature additions, atau code changes
+**Type:** Test Results Report
+**Unique Value:** Impact analysis, regression health tracking, comparison dengan previous cycles
+**Decision:** PASS / FAIL
 
-2. Internal Testing (QA)
-   ├─> Execute tests
-   └─> SIT REPORT (02)
+---
 
-3. Pre-UAT Check
-   └─> TEST EXECUTION SUMMARY (05) ← untuk stakeholder: ready UAT?
+## ZERO REDUNDANCY - UNIQUE PURPOSE
 
-4. UAT dengan Stakeholders
-   └─> UAT REPORT (03) ← formal approval
+| Template | Primary Focus | When to Use | Output |
+|----------|---------------|-------------|--------|
+| Test Plan (01) | Strategy & planning | Before testing starts | Test strategy |
+| SIT Report (02) | Technical integration | After internal QA | PASS/CONDITIONAL/NOT PASS |
+| UAT Report (03) | Business acceptance | After UAT sessions | APPROVED/REJECTED |
+| Performance (04) | Performance & SLA | After performance test | PASS/WARNING/FAIL |
+| Test Exec Summary (05) | Readiness check | Before UAT | READY/NOT READY |
+| Test Closure (06) | Final production decision | After all testing | GO/NO-GO |
+| Security (07) | Security vulnerabilities | After VAPT | PASS/FAIL |
+| Regression (08) | Change impact | After code changes | PASS/FAIL |
 
-5. Performance Testing
-   └─> PERFORMANCE TEST REPORT (04)
-
-6. Final Wrap-Up
-   └─> TEST CLOSURE REPORT (06) ← consolidate semua, GO/NO-GO decision
-
-7. Production Release
-```
-
-### Perbedaan Utama (Zero Redundansi)
-
-| Template | Timing | Audience | Purpose | Output |
-|----------|--------|----------|---------|--------|
-| **Test Plan** | Sebelum testing | Internal team | Planning & strategy | Test strategy |
-| **SIT Report** | Setelah integration test | Internal + PM | Technical integration results | PASS/CONDITIONAL/NOT PASS |
-| **Test Exec Summary** | Sebelum UAT | Stakeholders | Quick readiness check | READY/NOT READY for UAT |
-| **UAT Report** | Setelah UAT | Stakeholders | Business acceptance | APPROVED/REJECTED |
-| **Performance Report** | Setelah performance test | Technical team | Performance & SLA | PASS/WARNING/FAIL |
-| **Test Closure** | Setelah semua testing | All stakeholders | Final production decision | GO/NO-GO |
-
-**Tidak ada overlap:** Setiap dokumen punya timing, audience, purpose, dan output yang BERBEDA.
+**Tidak ada overlap:** Setiap dokumen punya timing, focus, dan decision framework yang BERBEDA.
 
 ---
 
 ## QUICK START
 
 ### 1. Pilih Template
-Pilih template sesuai testing phase (lihat flow diagram di atas)
+Gunakan mapping table di atas untuk pilih template sesuai testing phase
 
 ### 2. Copy Template
 ```bash
@@ -280,22 +204,6 @@ Ikuti struktur template, isi setiap section dengan data aktual dari QATM.
 - Peer review
 - Tech Lead review
 - PM/Stakeholder approval
-
----
-
-## PERBEDAAN UTAMA DARI V1
-
-| Aspek | V1 (Old) | V2 (New) |
-|--------|----------|----------|
-| **Emojis** | Yes (banyak emoticon) | No (0 emojis, 0 emoticons) |
-| **Format** | Varied | 100% seragam |
-| **Panjang** | Longer | 20-30% shorter |
-| **Struktur** | Inconsistent | Konsisten di SEMUA template |
-| **Redundansi** | Some overlap | Zero redundansi |
-| **Templates** | 4-5 templates | 6 templates (added Test Closure) |
-| **Bahasa** | Mixed | Bahasa Indonesia primary, technical terms English |
-| **Automation** | Implied mandatory | Clearly optional |
-| **Approval Sections** | Inconsistent | Fully standardized |
 
 ---
 
@@ -370,10 +278,11 @@ Sebelum submit:
 Contoh:
 - TestPlan_SIPGN_Module1_v1.0.md
 - SIT_Report_SIPGN_1.1_v1.0.md
-- TestExecSummary_SIPGN_1.1_v1.0.md
 - UAT_Report_INAGOV_Talenta_v2.1.md
 - PerfTest_Report_SIPGN_API_v1.0.md
 - TestClosure_Report_SIPGN_v1.0.md
+- SecurityTest_Report_SIPGN_v1.0.md
+- RegressionTest_Report_SIPGN_Cycle3_v1.0.md
 ```
 
 ---
@@ -393,7 +302,7 @@ Contoh:
 
 **Approval Pattern:**
 - **Planning docs (Test Plan):** PERSETUJUAN (single table, approval before execution)
-- **Report docs (SIT, Performance, Test Exec Summary, Test Closure):** DIBUAT OLEH + DIREVIEW OLEH
+- **Report docs (SIT, Performance, Security, Regression, Test Exec Summary, Test Closure):** DIBUAT OLEH + DIREVIEW OLEH
 - **Special case (UAT):** DIBUAT OLEH + PERSETUJUAN UAT (butuh stakeholder decision)
 
 ### Table Format
@@ -436,17 +345,19 @@ Tetap dalam English:
 ## DAFTAR FILE
 
 ```
-Doc_Template_Improved_v2/
+qa-document-templates/
 ├── README.md                          (File ini)
-├── 01_TEST_PLAN.md                    (~10 pages)
-├── 02_SIT_REPORT.md                   (~6 pages)
-├── 03_UAT_REPORT.md                   (~8 pages)
-├── 04_PERFORMANCE_TEST_REPORT.md      (~10 pages)
-├── 05_TEST_EXECUTION_SUMMARY.md       (~5 pages)
-└── 06_TEST_CLOSURE_REPORT.md          (~12 pages) - NEW!
+├── 01_TEST_PLAN.md                    (~10 pages) - Planning
+├── 02_SIT_REPORT.md                   (~6 pages) - Integration + System
+├── 03_UAT_REPORT.md                   (~8 pages) - UAT Approval
+├── 04_PERFORMANCE_TEST_REPORT.md      (~10 pages) - Performance
+├── 05_TEST_EXECUTION_SUMMARY.md       (~5 pages) - Pre-UAT Check
+├── 06_TEST_CLOSURE_REPORT.md          (~12 pages) - Final Wrap-Up
+├── 07_SECURITY_TEST_REPORT.md         (~15 pages) - VAPT
+└── 08_REGRESSION_TEST_REPORT.md       (~10 pages) - Regression
 ```
 
-**Total:** 6 templates, covering full testing lifecycle dari planning sampai production release.
+**Total:** 8 templates covering full testing lifecycle + semua test types
 
 ---
 
@@ -455,31 +366,35 @@ Doc_Template_Improved_v2/
 ### v2.0 (2026-05-19) - CURRENT
 **Major Changes:**
 - **ZERO EMOJIS:** Removed ALL emojis dan emoticons (termasuk ✓ ✗) dari semua template
-- **100% STANDARDIZED:** Format seragam di semua 6 templates
+- **100% STANDARDIZED:** Format seragam di semua 8 templates
   - Header sections konsisten
   - Approval pattern standardized
   - Table format uniform
   - Placeholder naming konsisten (`[Nama]`, `[KodeProyek]`, dll)
-- **ZERO REDUNDANCY:** Setiap template punya purpose unik, tidak ada overlap
-- **NEW TEMPLATE:** Test Closure Report (06) untuk final wrap-up
+- **COMPLETE COVERAGE:** Added 2 new templates untuk full coverage
+  - Security Test Report (07) - VAPT coverage
+  - Regression Test Report (08) - regression tracking
+- **ZERO REDUNDANCY:** Setiap template punya purpose unik, clear mapping di Test Plan
+- **CLEAR MAPPING:** Test Plan sekarang include mapping table ke semua output documents
 - **BAHASA INDONESIA PRIMARY:** Semua headers dan content Indonesia, technical terms English
 - **AUTOMATION OPTIONAL:** Marked jelas sebagai opsional dengan pertimbangan
 
 **Benefits:**
 - Tampilan jauh lebih professional (no emojis/emoticons)
-- Mudah di-print dan didistribusikan
-- Pattern seragam = easy to learn
+- Complete testing lifecycle coverage (8 templates)
+- Clear mapping: setiap testing activity ada output documentnya
 - Zero redundancy = jelas kapan pakai template mana
-- Complete lifecycle coverage (6 templates)
+- Pattern seragam = easy to learn
 - Better for formal corporate documentation
 
 ### v1.0 (Previous)
 - Initial templates dengan emojis & emoticons
 - Format kurang terstandarisasi
-- 4-5 templates
+- 4-6 templates (incomplete coverage)
 - Some redundancy
 - Mostly English language
 - Automation implied as mandatory
+- No clear mapping between test activities dan reports
 
 ---
 
@@ -493,8 +408,9 @@ Jika ada saran atau feedback untuk improvement:
 **Prinsip v2.0:**
 - Professional (no emojis)
 - Standardized (uniform pattern)
+- Complete (full coverage)
+- Clear (explicit mapping)
 - Focused (zero redundancy)
-- Complete (full lifecycle)
 
 ---
 

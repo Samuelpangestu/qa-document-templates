@@ -276,13 +276,13 @@ Sebelum submit:
 [DocType]_[ProjectCode]_[Module]_v[Major].[Minor].md
 
 Contoh:
-- TestPlan_SIPGN_Module1_v1.0.md
-- SIT_Report_SIPGN_1.1_v1.0.md
-- UAT_Report_INAGOV_Talenta_v2.1.md
-- PerfTest_Report_SIPGN_API_v1.0.md
-- TestClosure_Report_SIPGN_v1.0.md
-- SecurityTest_Report_SIPGN_v1.0.md
-- RegressionTest_Report_SIPGN_Cycle3_v1.0.md
+- TestPlan_ProjectA_Module1_v1.0.md
+- SIT_Report_ProjectA_1.1_v1.0.md
+- UAT_Report_ProjectB_Talenta_v2.1.md
+- PerfTest_Report_ProjectA_API_v1.0.md
+- TestClosure_Report_ProjectA_v1.0.md
+- SecurityTest_Report_ProjectA_v1.0.md
+- RegressionTest_Report_ProjectA_Cycle3_v1.0.md
 ```
 
 ---
@@ -338,7 +338,7 @@ Tetap dalam English:
 **Process Owner:** [Nama] - [Email]
 
 ### General QA Team
-**Email:** departemen.qa@inadigital.co.id
+**Email:** qa-team@example.com
 
 ---
 
